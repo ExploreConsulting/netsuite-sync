@@ -19,7 +19,7 @@ Get help with `ns --help`
 This utility uploads files to a specific folder in your NetSuite file cabinet. We've found it a best practice to keep
 all suitescripts in a single folder if possible.
 
-### Windows Users
+(**Windows Users Note**)
 We recommend you install Git Bash and run all this stuff in the bit bash shell.
 
 1. Login to your NetSuite account and navigate to the folder you want to upload to - note the internal id of the folder.
