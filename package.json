@@ -1,0 +1,39 @@
+{
+  "description": "push files to the file cabinet",
+  "name": "netsuite-sync",
+  "version": "1.1.1",
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "commander": "^2.8.1",
+    "crypto-js": "^3.1.2-5",
+    "debug": "^2.2.0",
+    "lodash": "2.4.1",
+    "readline-sync": "^1.2.21",
+    "request": "2.51.0",
+    "xml2js": "0.4.4"
+  },
+  "main": "ns.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "mocha": "2.0.1",
+    "should": "4.4.1",
+    "replace": "0.3.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "bin": {
+    "ns": "ns.js"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ExploreConsulting/netsuite-sync.git"
+  }
+}

@@ -1,0 +1,3 @@
+<platformMsgs:getDataCenterUrls>
+    <account><%=account%></account>
+</platformMsgs:getDataCenterUrls>

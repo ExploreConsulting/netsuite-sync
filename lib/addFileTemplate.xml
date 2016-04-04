@@ -1,0 +1,9 @@
+<platformMsgs:add xmlns:s0="urn:filecabinet_2014_2.documents.webservices.netsuite.com">
+    <platformMsgs:record xsi:type="s0:File">
+        <s0:name><%=filename%></s0:name>
+        <s0:attachFrom>_computer</s0:attachFrom>
+        <s0:content><%=content%></s0:content>
+        <s0:folder internalId="<%=folderid%>" type="folder"/>
+        <s0:description><%=description%></s0:description>
+    </platformMsgs:record>
+</platformMsgs:add>

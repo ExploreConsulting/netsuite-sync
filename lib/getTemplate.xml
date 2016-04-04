@@ -1,0 +1,3 @@
+<platformMsgs:get>
+    <platformMsgs:baseRef type="<%=type%>" internalId="<%=internalId%>" xsi:type="platformCore:RecordRef"/>
+</platformMsgs:get>
