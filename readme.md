@@ -9,7 +9,7 @@ The idea is it's much faster fhan to fiddling with the netsuite UI to repeatedly
 
 To install globally
 
-    npm install -g suitescript-file-sync
+    npm install -g netsuite-sync
 
 The commandline program is named `ns`
 
