@@ -22,6 +22,7 @@ program
     .version(require('./package.json').version)
     .option('-u, --upload <file>', "Upload file to NetSuite file cabinet")
     .option('-d, --desc description', "Description for uploaded file")
+    .option('-f, --folder [value]', "Overrides the internal ID of the target folder for the uploaded file")
     .option('-e, --encrypt-config', "encrypts the config file using the NSPW environment variable (must" +
     " be set prior) as passphrase")
     .option('--decrypt-config', "decrypts the config file and displays the plaintext")
@@ -58,7 +59,7 @@ if (program.encryptConfig) {
 }
 
 if (program.upload) {
-    fileCabinet.postFile(program.upload, program.desc, function (err, resp) {
+    fileCabinet.postFile(program.upload, program.desc, program.folder, function (err, resp) {
 
         if (err) throw err;
 
