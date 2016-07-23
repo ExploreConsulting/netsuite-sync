@@ -7,7 +7,7 @@
     "commander": "^2.8.1",
     "crypto-js": "^3.1.2-5",
     "debug": "^2.2.0",
-    "lodash": "2.4.1",
+    "lodash": "^4.0.0",
     "readline-sync": "^1.2.21",
     "request": "2.51.0",
     "xml2js": "0.4.4"
