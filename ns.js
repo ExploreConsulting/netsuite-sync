@@ -2,13 +2,13 @@
 
 // this is the console program
 
-var fileCabinet  = require("./lib/FileCabinet");
-var program      = require("commander");
-var chalk        = require('chalk');
+var fileCabinet = require("./lib/FileCabinet");
+var program = require("commander");
+var chalk = require('chalk');
 var secureConfig = require("./lib/SecureConfigFile");
-var fs           = require('fs');
-var path         = require('path');
-var _            = require('lodash');
+var fs = require('fs');
+var path = require('path');
+var _ = require('lodash');
 // this is one of the few libs I found that is compatible with the (linux) webstorm terminal
 var readlineSync = require('readline-sync');
 // custom debugger that logs only if environment variable DEBUG=ns
@@ -24,12 +24,12 @@ program
     .option('-d, --desc description', "Description for uploaded file")
     .option('-f, --folder [value]', "Overrides the internal ID of the target folder for the uploaded file")
     .option('-e, --encrypt-config', "encrypts the config file using the NSPW environment variable (must" +
-    " be set prior) as passphrase")
+        " be set prior) as passphrase")
     .option('--decrypt-config', "decrypts the config file and displays the plaintext")
-    .option('-c, --create-config', "displays a sample generic configuration which you save as " + CONFIG_FILE  +
-    " then fill out and run the encrypt (-e) command")
+    .option('-c, --create-config', "displays a sample generic configuration which you save as " + CONFIG_FILE +
+        " then fill out and run the encrypt (-e) command")
     .option('-g, --gen-config', "Contacts NetSuite for config information and generates a config file so you don't " +
-    "have to populate the config file entirely by hand")
+        "have to populate the config file entirely by hand")
     .on('--help', function () {
         console.log('Examples:');
         console.log();
@@ -107,7 +107,7 @@ if (program.genConfig) {
     var folder = readlineSync.question('Destination Folder Id:');
     var isSandbox = readlineSync.keyInYN('Sandbox Account?');
 
-    fileCabinet.discoverConfigInfo(username, password,isSandbox)
+    fileCabinet.discoverConfigInfo(username, password, isSandbox)
         .then(function (result) {
             debug('Received body %s', result.body);
             var accountInfo = promptUserForAccountSelection(JSON.parse(result.body));
@@ -122,7 +122,7 @@ if (program.genConfig) {
                 folderid: folder || 0
             })
         })
-        .then(function(configData) {
+        .then(function (configData) {
             fs.writeFileSync(CONFIG_FILE, configData);
             console.log('wrote ' + CONFIG_FILE)
             var out = secureConfig.encryptFile(CONFIG_FILE);
@@ -133,15 +133,30 @@ if (program.genConfig) {
 }
 
 /**
- * prompts the user to select an account+role
+ * prompts the user to select a NetSuite account+role
  * @param {Array.<{account, role}>} info JSON as returned from NS 'roles' api
  * @returns {{account,role,dataCenterURLs}} the account info object selected
  */
 function promptUserForAccountSelection(info) {
+    var PAGE_SIZE = 30
+    var selectedAccountIndex = -1;
+
     // create <Account Name> (Role Name) labels for the questions
-    var questions = _.map(info, function (r) {
-        return r.account.name + ' (' + r.role.name + ')'
-    });
-    var index     = readlineSync.keyInSelect(questions, 'Which NetSuite Account (Role) to use?')
-    return info[index];
+    var questions = _(info)
+        .map(function (r) { return r.account.name + ' (' + r.role.name + ')' })
+        .chunk(PAGE_SIZE)
+        .forEach(function (q, index) {
+        // detect being on 'last page' of results
+        var onlastPage = (info.length - (PAGE_SIZE*index)) <= PAGE_SIZE
+        var cancelPrompt = onlastPage ? "Cancel" : "Show More...";
+        var userInput = readlineSync.keyInSelect(q, 'Which NetSuite Account (Role) to use?', {cancel: cancelPrompt});
+        if (userInput === -1) return true // keep iterating if the user didn't select an account
+        else{
+            console.log('selected', q[userInput])
+            // we are on the the nth page of results, so calculate the true index relative to the the entire info array
+            selectedAccountIndex = (index * PAGE_SIZE) + userInput
+            return false // abort forEach()
+        }
+    })
+    return info[selectedAccountIndex];
 }
