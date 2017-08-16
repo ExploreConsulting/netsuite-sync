@@ -104,7 +104,9 @@ if (program.genConfig) {
     console.log("Generating " + CONFIG_FILE + "...")
     console.log('Enter credentials to select account/role to use..')
     var username = readlineSync.question('Account login email:');
-    var password = readlineSync.question('Account login password:');
+    var password = readlineSync.question('Account login password:', {
+        hideEchoBack: true
+    });
     console.log('Enter the internal id of the folder to which files will be saved. If you do not set this it will' +
         ' default to zero and you must edit the config file manually to set the folder id value');
     var folder = readlineSync.question('Destination Folder Id:');
