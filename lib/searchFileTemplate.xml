@@ -1,20 +1,21 @@
-<platformMsgs:search xmlns:s0="urn:filecabinet_2013_1.documents.webservices.netsuite.com">
+<platformMsgs:search xmlns:s0="urn:filecabinet_2014_2.documents.webservices.netsuite.com" xmlns:platformCommon="urn:common_2014_2.platform.webservices.netsuite.com">
     <platformMsgs:searchRecord xsi:type="s0:FileSearchAdvanced">
-    <s0:criteria>
-    <s0:basic>
-    <platformCommon:internalId operator="anyOf"
-    platformCore:searchValue internalId="254" /  // internal id of the folder
-    /platformCommon:internalId
-    /s0:basic
-    /s0:criteria
-    s0:columns
-    s0:fileJoin
-    platformCommon:internalId
-    platformCore:searchValue type="file" /
-    /platformCommon:internalId
-    /s0:fileJoin
-    /s0:columns
-    /platformMsgs:searchRecord
-    /platformMsgs:search
-</search>
-exit
+        <s0:criteria>
+            <s0:basic>
+                <platformCommon:folder operator="anyOf">
+                    <platformCore:searchValue internalId="<%=folder%>" />
+                </platformCommon:folder>
+                <platformCommon:name operator="contains">
+                    <platformCore:searchValue><%=filename%></platformCore:searchValue>
+                </platformCommon:name>
+            </s0:basic>
+        </s0:criteria>
+        <s0:columns>
+            <s0:basic>
+                <platformCommon:internalId>
+                    <platformCore:searchValue type="file" />
+                </platformCommon:internalId>
+            </s0:basic>
+        </s0:columns>
+    </platformMsgs:searchRecord>
+</platformMsgs:search>

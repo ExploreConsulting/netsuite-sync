@@ -21,6 +21,7 @@ const CONFIG_FILE = 'NetSuiteConfig.js';
 program
     .version(require('./package.json').version)
     .option('-u, --upload <file>', "Upload file to NetSuite file cabinet")
+    .option('-r, --remove <file>', "Remove file from NetSuite file cabinet")
     .option('-d, --desc description', "Description for uploaded file")
     .option('-f, --folder [value]',
         "Overrides the internal ID of the target folder for the uploaded file")
@@ -73,6 +74,29 @@ if (program.upload) {
         }
         else {
             var failMsg = "Problem uploading file" + JSON.stringify(wr);
+            console.error(chalk.red(failMsg));
+        }
+    });
+}
+
+if (program.remove) {
+    fileCabinet.removeFile(program.remove, program.folder, function (err, resp) {
+
+        if (err) throw err;
+        if (resp.Envelope.Body.Fault) {
+            console.log(resp.Envelope.Body.Fault);
+            return;
+        }
+
+        debug('response from NS cabinet remove: %s', JSON.stringify(resp))
+
+        var wr = resp.Envelope.Body.deleteResponse.writeResponse;
+        if (wr.status.isSuccess == "true") {
+            var successMsg = "File removed successfully";
+            console.log(chalk.green(successMsg));
+        }
+        else {
+            var failMsg = "Problem removing file" + JSON.stringify(wr);
             console.error(chalk.red(failMsg));
         }
     });

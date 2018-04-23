@@ -1,0 +1,3 @@
+<platformMsgs:delete xmlns:s0="urn:filecabinet_2014_2.documents.webservices.netsuite.com">
+  <platformMsgs:baseRef type="file" internalId="<%=fileId%>" xsi:type="q1:RecordRef" xmlns:q1="urn:core_2014_2.platform.webservices.netsuite.com"/>
+</platformMsgs:delete>
