@@ -13,6 +13,7 @@ var _ = require('lodash');
 var readlineSync = require('readline-sync');
 // custom debugger that logs only if environment variable DEBUG=ns
 var debug = require('debug')('ns');
+const keytar = require('keytar')
 
 const CONFIG_FILE = 'NetSuiteConfig.js';
 
@@ -46,17 +47,27 @@ program
     .parse(process.argv);
 
 if (program.decryptConfig) {
-    var plaintext = secureConfig.decryptFile(CONFIG_FILE + ".enc");
-    console.log(plaintext);
-    process.exit();
+    keytar.getPassword('netsuite', 'abcd').then(pass=>{
+        var plaintext = secureConfig.decryptFile(CONFIG_FILE + ".enc", pass);
+        console.log(plaintext);
+        process.exit();
+    })
 }
 
 
 if (program.encryptConfig) {
     // only just prior to encrypt should the NetSuiteConfig.js file be cleartext
-    var out = secureConfig.encryptFile(CONFIG_FILE);
-    console.log("wrote file:" + out);
-    process.exit();
+    keytar.getPassword('netsuite', 'abcd').then(pass => {
+        if (!pass) {
+            const newPass = readlineSync.question('Enter new password:')
+            keytar.setPassword('netsuite', 'abcd', newPass)
+            pass = newPass
+        }
+        console.log('pass:', pass)
+        var out = secureConfig.encryptFile(CONFIG_FILE,pass);
+        console.log("wrote file:" + out);
+        process.exit();
+    }).catch( rejectreason => console.log(rejectreason))
 }
 
 if (program.upload) {
@@ -119,7 +130,6 @@ if (program.genConfig) {
             return createConfig({
                 account: accountInfo.account.internalId,
                 email: username,
-                password: password,
                 role: accountInfo.role.internalId,
                 webserviceshost: accountInfo.dataCenterURLs.webservicesDomain,
                 folderid: folder || 0
@@ -163,3 +173,7 @@ function promptUserForAccountSelection(info) {
     })
     return info[selectedAccountIndex];
 }
+
+
+
+

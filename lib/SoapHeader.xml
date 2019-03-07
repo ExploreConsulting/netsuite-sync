@@ -1,16 +1,16 @@
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-               xmlns:tns="urn:platform_2014_2.webservices.netsuite.com"
-               xmlns:platformMsgs="urn:messages_2014_2.platform.webservices.netsuite.com"
-               xmlns:platformCore="urn:core_2014_2.platform.webservices.netsuite.com"
-               xmlns:platformFaults="urn:faults_2014_2.platform.webservices.netsuite.com">
+               xmlns:tns="urn:platform_2018_1.webservices.netsuite.com"
+               xmlns:platformMsgs="urn:messages_2018_1.platform.webservices.netsuite.com"
+               xmlns:platformCore="urn:core_2018_1.platform.webservices.netsuite.com"
+               xmlns:platformFaults="urn:faults_2018_1.platform.webservices.netsuite.com">
     <soap:Header>
         <ns1:passport soap:actor="http://schemas.xmlsoap.org/soap/actor/next" soap:mustUnderstand="0"
-                      xmlns:ns1="urn:messages_2014_2.platform.webservices.netsuite.com">
-            <ns2:email xmlns:ns2="urn:core_2014_2.platform.webservices.netsuite.com"><%=email%></ns2:email>
-            <ns3:password xmlns:ns3="urn:core_2014_2.platform.webservices.netsuite.com"><%=password%></ns3:password>
-            <ns4:account xmlns:ns4="urn:core_2014_2.platform.webservices.netsuite.com"><%=account %></ns4:account>
-            <ns5:role internalId="<%=role %>" xmlns:ns5="urn:core_2014_2.platform.webservices.netsuite.com"/>
+                      xmlns:ns1="urn:messages_2018_1.platform.webservices.netsuite.com">
+            <ns2:email xmlns:ns2="urn:core_2018_1.platform.webservices.netsuite.com"><%=email%></ns2:email>
+            <ns3:password xmlns:ns3="urn:core_2018_1.platform.webservices.netsuite.com"><%=password%></ns3:password>
+            <ns4:account xmlns:ns4="urn:core_2018_1.platform.webservices.netsuite.com"><%=account %></ns4:account>
+            <ns5:role internalId="<%=role %>" xmlns:ns5="urn:core_2018_1.platform.webservices.netsuite.com"/>
         </ns1:passport>
     </soap:Header>
     <soap:Body>
